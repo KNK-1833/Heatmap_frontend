@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { heatmapAPI, aiAPI } from '@/lib/api';
 import type { HeatmapData, EngagementMetrics, SectionAnalysis, TimeSeriesData, AIAnalysis } from '@/types';
 
@@ -17,7 +17,7 @@ export function useHeatmap(options: UseHeatmapOptions) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchHeatmapData = async () => {
+  const fetchHeatmapData = useCallback(async () => {
     if (!articleId) return;
     
     setLoading(true);
@@ -35,13 +35,13 @@ export function useHeatmap(options: UseHeatmapOptions) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [articleId, dateFrom, dateTo, type]);
 
   useEffect(() => {
     if (autoFetch && articleId) {
       fetchHeatmapData();
     }
-  }, [articleId, dateFrom, dateTo, type, autoFetch]);
+  }, [autoFetch, articleId, fetchHeatmapData]);
 
   const refetch = () => {
     fetchHeatmapData();
@@ -64,7 +64,7 @@ export function useAnalytics(articleId: string | null) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     if (!articleId) return;
     
     setLoading(true);
@@ -78,11 +78,11 @@ export function useAnalytics(articleId: string | null) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [articleId]);
 
   useEffect(() => {
     fetchAnalytics();
-  }, [articleId]);
+  }, [fetchAnalytics]);
 
   const refetch = () => {
     fetchAnalytics();
@@ -102,7 +102,7 @@ export function useAIAnalysis(articleId: string | null) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchAnalysisHistory = async () => {
+  const fetchAnalysisHistory = useCallback(async () => {
     if (!articleId) return;
     
     setLoading(true);
@@ -116,11 +116,11 @@ export function useAIAnalysis(articleId: string | null) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [articleId]);
 
   useEffect(() => {
     fetchAnalysisHistory();
-  }, [articleId]);
+  }, [fetchAnalysisHistory]);
 
   const requestAnalysis = async (data: {
     analysis_type: string;

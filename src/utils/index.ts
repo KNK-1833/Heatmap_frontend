@@ -101,7 +101,7 @@ export function generateSessionId(): string {
 }
 
 // Debounce function for API calls
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -113,7 +113,7 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 // Throttle function for scroll events
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
@@ -223,7 +223,7 @@ export function deepClone<T>(obj: T): T {
   if (obj instanceof Date) return new Date(obj.getTime()) as unknown as T;
   if (obj instanceof Array) return obj.map(item => deepClone(item)) as unknown as T;
   if (typeof obj === 'object') {
-    const clonedObj = {} as { [key: string]: any };
+    const clonedObj = {} as { [key: string]: unknown };
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         clonedObj[key] = deepClone(obj[key]);
@@ -247,7 +247,7 @@ export const storage = {
     }
   },
   
-  set: (key: string, value: any): void => {
+  set: (key: string, value: unknown): void => {
     if (typeof window === 'undefined') return;
     
     try {

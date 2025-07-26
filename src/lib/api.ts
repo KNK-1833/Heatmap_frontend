@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
 import type { 
   APIResponse, 
   APIError, 
@@ -62,7 +62,7 @@ api.interceptors.response.use(
             return api.request(error.config);
           }
         }
-      } catch (refreshError) {
+      } catch {
         // Refresh failed, redirect to login
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
@@ -418,11 +418,11 @@ export const apiClient = {
   instance: api, // Direct axios instance access
   
   // Direct HTTP methods for compatibility
-  get: (url: string, config?: any) => api.get(url, config),
-  post: (url: string, data?: any, config?: any) => api.post(url, data, config),
-  put: (url: string, data?: any, config?: any) => api.put(url, data, config),
-  delete: (url: string, config?: any) => api.delete(url, config),
-  patch: (url: string, data?: any, config?: any) => api.patch(url, data, config),
+  get: (url: string, config?: AxiosRequestConfig) => api.get(url, config),
+  post: (url: string, data?: unknown, config?: AxiosRequestConfig) => api.post(url, data, config),
+  put: (url: string, data?: unknown, config?: AxiosRequestConfig) => api.put(url, data, config),
+  delete: (url: string, config?: AxiosRequestConfig) => api.delete(url, config),
+  patch: (url: string, data?: unknown, config?: AxiosRequestConfig) => api.patch(url, data, config),
 };
 
 export default api;
