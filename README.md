@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ブログヒートマップ分析システム - Frontend
 
-## Getting Started
+Next.js 15 + TypeScript + Tailwind CSSで構築されたダッシュボード
 
-First, run the development server:
+## 機能概要
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **ダッシュボード**: 4つのタブで包括的な分析表示
+- **記事プレビュー**: スクロール深度ヒートマップ付きコンテンツ表示
+- **ヒートマップ可視化**: Canvas APIを使用したクリック位置の可視化
+- **エンゲージメント分析**: 読書時間、スクロール深度、離脱率等の分析
+- **離脱分析**: AI による離脱原因の分析とインサイト
+- **リアルタイム表示**: WebSocketによるリアルタイムデータ更新
+
+## 技術スタック
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI + shadcn/ui
+- **Charts**: Chart.js / Recharts
+- **State Management**: React Context + Hooks
+- **HTTP Client**: Axios
+- **Deployment**: Vercel
+
+## 主要コンポーネント
+
+### ダッシュボード
+- `AnalyticsDashboard`: メインダッシュボード
+- `ArticleSelector`: 記事選択UI
+- `EngagementMetrics`: エンゲージメント指標表示
+
+### ヒートマップ
+- `HeatmapViewer`: ヒートマップ表示とコントロール
+- `HeatmapCanvas`: Canvas描画コンポーネント
+- `HeatmapControls`: 設定コントロール
+
+### 記事プレビュー
+- `ArticlePreview`: 記事コンテンツとスクロール深度表示
+- スクロール位置別の読者到達率可視化
+
+## 環境変数
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+NEXT_PUBLIC_MCP_SERVER_URL=http://localhost:3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 開発環境起動
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# 依存関係インストール
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 開発サーバー起動
+npm run dev
+```
 
-## Learn More
+## ビルドとデプロイ
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# 本番ビルド
+npm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# ビルド結果の確認
+npm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Vercel デプロイ
 
-## Deploy on Vercel
+1. Vercel プロジェクト作成
+2. GitHub リポジトリ連携
+3. 環境変数設定
+4. 自動デプロイ
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 主要機能
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 1. Overview タブ
+- クイックメトリクス表示
+- ヒートマッププレビュー
+- 最近のアクティビティ
+
+### 2. Article Preview タブ
+- 記事コンテンツ表示
+- スクロール深度ヒートマップ
+- セクション別読者到達率
+
+### 3. Heatmap タブ
+- フルサイズヒートマップ表示
+- インタラクティブコントロール
+- データエクスポート機能
+
+### 4. Exit Analysis タブ
+- 離脱ポイント分析
+- AI による離脱原因の分析
+- 改善提案表示
+
+### 5. Engagement タブ
+- 詳細エンゲージメント指標
+- 日別トレンド表示
+- インタラクション分析
+
+## ライセンス
+
+MIT License
