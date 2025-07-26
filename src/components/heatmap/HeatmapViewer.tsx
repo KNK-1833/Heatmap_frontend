@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { HeatmapCanvas } from './HeatmapCanvas';
 import { HeatmapControls } from './HeatmapControls';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button';
 import { 
   LogOut, 
   AlertTriangle, 
-  Clock, 
   MousePointer, 
   TrendingDown,
   Target,
@@ -76,7 +75,7 @@ export const ExitAnalysisPanel: React.FC<ExitAnalysisPanelProps> = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchExitAnalysis = async () => {
+  const fetchExitAnalysis = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -105,13 +104,13 @@ export const ExitAnalysisPanel: React.FC<ExitAnalysisPanelProps> = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, [articleId, dateRange]);
 
   useEffect(() => {
     if (articleId) {
       fetchExitAnalysis();
     }
-  }, [articleId, dateRange, refreshKey]);
+  }, [articleId, refreshKey, fetchExitAnalysis]);
 
   if (loading) {
     return (

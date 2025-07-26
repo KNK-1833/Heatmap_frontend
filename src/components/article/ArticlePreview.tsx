@@ -34,12 +34,11 @@ interface ArticlePreviewProps {
 
 export const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   article,
-  readingData = [],
+  readingData = [], // eslint-disable-line @typescript-eslint/no-unused-vars
   scrollData = [],
   className = '',
   showScrollHeatmap = true,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [scrollDepths, setScrollDepths] = useState<number[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
 

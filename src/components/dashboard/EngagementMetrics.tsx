@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
@@ -11,12 +11,10 @@ import {
   MousePointer, 
   Eye, 
   TrendingUp, 
-  Users, 
   Target,
   Activity,
   BarChart3
 } from 'lucide-react';
-import { apiClient } from '@/lib/api';
 
 interface EngagementMetricsProps {
   articleId: string;
@@ -75,7 +73,7 @@ export const EngagementMetrics: React.FC<EngagementMetricsProps> = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchEngagementData = async () => {
+  const fetchEngagementData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -108,13 +106,13 @@ export const EngagementMetrics: React.FC<EngagementMetricsProps> = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, [articleId, dateRange]);
 
   useEffect(() => {
     if (articleId) {
       fetchEngagementData();
     }
-  }, [articleId, dateRange, refreshKey]);
+  }, [articleId, refreshKey, fetchEngagementData]);
 
   if (loading) {
     return (
@@ -140,11 +138,6 @@ export const EngagementMetrics: React.FC<EngagementMetricsProps> = ({
 
   if (!data) return null;
 
-  const formatTime = (milliseconds: number) => {
-    const minutes = Math.floor(milliseconds / 60000);
-    const seconds = Math.floor((milliseconds % 60000) / 1000);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
 
   return (
     <div className={`space-y-6 ${className}`}>

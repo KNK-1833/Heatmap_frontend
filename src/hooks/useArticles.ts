@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { articlesAPI, apiClient } from '@/lib/api';
-import type { Article, PaginatedResponse } from '@/types';
+import { useState, useEffect, useCallback } from 'react';
+import { articlesAPI } from '@/lib/api';
+import type { Article } from '@/types';
 
 interface UseArticlesOptions {
   page?: number;
@@ -30,7 +30,7 @@ export function useArticles(options: UseArticlesOptions = {}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchArticles = async () => {
+  const fetchArticles = useCallback(async () => {
     setLoading(true);
     setError(null);
     
@@ -46,7 +46,7 @@ export function useArticles(options: UseArticlesOptions = {}) {
         
         setArticles(response.items);
         setPagination(response.pagination);
-      } catch (apiError) {
+      } catch {
         // Fallback to mock data with proper UUIDs
         const mockArticles: Article[] = [
           {
@@ -107,13 +107,13 @@ export function useArticles(options: UseArticlesOptions = {}) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, limit, published, search]);
 
   useEffect(() => {
     if (autoFetch) {
       fetchArticles();
     }
-  }, [page, limit, published, search, autoFetch]);
+  }, [autoFetch, fetchArticles]);
 
   const createArticle = async (data: {
     title: string;
@@ -195,7 +195,7 @@ export function useArticle(id: string | null) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchArticle = async () => {
+  const fetchArticle = useCallback(async () => {
     if (!id) return;
     
     setLoading(true);
@@ -209,11 +209,11 @@ export function useArticle(id: string | null) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchArticle();
-  }, [id]);
+  }, [fetchArticle]);
 
   const updateArticle = async (data: Partial<Article>) => {
     if (!id) return;

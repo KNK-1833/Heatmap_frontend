@@ -140,7 +140,7 @@ interface HeatmapPoint {
 }
 
 function generateHeatmapPoints(clickData: ClickLog[], radius: number): HeatmapPoint[] {
-  const points: HeatmapPoint[] = [];
+  // const points: HeatmapPoint[] = [];
   const gridSize = Math.floor(radius / 2);
   const pointMap = new Map<string, HeatmapPoint>();
 
