@@ -3,14 +3,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { ScrollBar } from '@/components/ui/scroll-area';
 import { 
   FileText, 
   Eye, 
   Clock, 
-  MousePointer2,
   TrendingDown,
   AlertCircle 
 } from 'lucide-react';

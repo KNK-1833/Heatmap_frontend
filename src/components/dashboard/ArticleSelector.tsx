@@ -50,7 +50,7 @@ export const ArticleSelector: React.FC<ArticleSelectorProps> = ({
   if (error) {
     return (
       <div className={`text-sm text-red-600 ${className}`}>
-        Failed to load articles: {error.message}
+        Failed to load articles: {error}
       </div>
     );
   }

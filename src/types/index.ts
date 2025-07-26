@@ -20,9 +20,13 @@ export interface Article {
   content_html: string;
   content_structure: ContentStructure;
   slug: string;
+  status: 'draft' | 'published' | 'archived';
   is_published: boolean;
+  meta_description?: string;
+  tags?: string[];
   created_at: string;
   updated_at: string;
+  published_at?: string;
   stats?: ArticleStats;
 }
 
@@ -87,6 +91,38 @@ export interface HeatmapSummary {
   avg_scroll_depth: number;
   avg_reading_time: number;
   overall_exit_rate: number;
+}
+
+// Tracking Data Types
+export interface ClickLog {
+  id: string;
+  session_id: string;
+  x_position: number;
+  y_position: number;
+  element_info: {
+    tag: string;
+    text: string;
+    href?: string;
+    id?: string;
+    class?: string;
+  };
+  viewport_width: number;
+  viewport_height: number;
+  timestamp: string;
+  page_url: string;
+  user_agent: string;
+}
+
+export interface ReadingLog {
+  id: string;
+  session_id: string;
+  scroll_depth_percent: number;
+  max_scroll_depth: number;
+  reading_time_seconds: number;
+  total_reading_time_seconds: number;
+  timestamp: string;
+  page_url: string;
+  user_agent: string;
 }
 
 // Analytics Types

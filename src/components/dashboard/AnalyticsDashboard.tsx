@@ -121,12 +121,9 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({
           </CardHeader>
           <CardContent>
             <DateRangePicker
-              from={dateRange.from}
-              to={dateRange.to}
-              onSelect={(range) => {
-                if (range?.from && range?.to) {
-                  setDateRange({ from: range.from, to: range.to });
-                }
+              value={dateRange}
+              onChange={(range: { from: Date; to: Date }) => {
+                setDateRange(range);
               }}
             />
           </CardContent>

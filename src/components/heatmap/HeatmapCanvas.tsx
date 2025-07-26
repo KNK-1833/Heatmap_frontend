@@ -109,10 +109,10 @@ export const HeatmapCanvas: React.FC<HeatmapCanvasProps> = ({
       {/* Hover tooltip */}
       {hoveredPoint && (
         <div className="absolute bg-black text-white p-2 rounded shadow-lg text-xs z-10 pointer-events-none">
-          <div>Position: ({hoveredPoint.x_coordinate}, {hoveredPoint.y_coordinate})</div>
-          <div>Element: {hoveredPoint.element_tag}</div>
-          {hoveredPoint.element_text && (
-            <div>Text: {hoveredPoint.element_text.substring(0, 50)}...</div>
+          <div>Position: ({hoveredPoint.x_position}, {hoveredPoint.y_position})</div>
+          <div>Element: {hoveredPoint.element_info.tag}</div>
+          {hoveredPoint.element_info.text && (
+            <div>Text: {hoveredPoint.element_info.text.substring(0, 50)}...</div>
           )}
           <div>Time: {new Date(hoveredPoint.timestamp).toLocaleTimeString()}</div>
         </div>
@@ -146,8 +146,8 @@ function generateHeatmapPoints(clickData: ClickLog[], radius: number): HeatmapPo
 
   clickData.forEach((click) => {
     // Snap to grid to group nearby clicks
-    const gridX = Math.floor(click.x_coordinate / gridSize) * gridSize;
-    const gridY = Math.floor(click.y_coordinate / gridSize) * gridSize;
+    const gridX = Math.floor(click.x_position / gridSize) * gridSize;
+    const gridY = Math.floor(click.y_position / gridSize) * gridSize;
     const key = `${gridX},${gridY}`;
 
     if (pointMap.has(key)) {
@@ -220,7 +220,7 @@ function findClosestClickPoint(
 
   clickData.forEach((click) => {
     const distance = Math.sqrt(
-      Math.pow(click.x_coordinate - x, 2) + Math.pow(click.y_coordinate - y, 2)
+      Math.pow(click.x_position - x, 2) + Math.pow(click.y_position - y, 2)
     );
 
     if (distance < minDistance) {

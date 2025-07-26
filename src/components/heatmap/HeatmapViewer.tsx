@@ -183,8 +183,8 @@ export const HeatmapViewer: React.FC<HeatmapViewerProps> = ({
                           key={index}
                           className="absolute w-2 h-2 bg-red-500 rounded-full opacity-70 transform -translate-x-1 -translate-y-1"
                           style={{
-                            left: click.x_coordinate,
-                            top: click.y_coordinate,
+                            left: click.x_position,
+                            top: click.y_position,
                           }}
                         />
                       ))}
@@ -207,11 +207,11 @@ export const HeatmapViewer: React.FC<HeatmapViewerProps> = ({
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
                 <div className="font-medium">Position</div>
-                <div>({hoveredClick.x_coordinate}, {hoveredClick.y_coordinate})</div>
+                <div>({hoveredClick.x_position}, {hoveredClick.y_position})</div>
               </div>
               <div>
                 <div className="font-medium">Element</div>
-                <div>{hoveredClick.element_tag}</div>
+                <div>{hoveredClick.element_info.tag}</div>
               </div>
               <div>
                 <div className="font-medium">Time</div>
@@ -221,16 +221,16 @@ export const HeatmapViewer: React.FC<HeatmapViewerProps> = ({
                 <div className="font-medium">Session</div>
                 <div className="truncate">{hoveredClick.session_id}</div>
               </div>
-              {hoveredClick.element_text && (
+              {hoveredClick.element_info.text && (
                 <div className="col-span-2">
                   <div className="font-medium">Text Content</div>
-                  <div className="truncate">{hoveredClick.element_text}</div>
+                  <div className="truncate">{hoveredClick.element_info.text}</div>
                 </div>
               )}
-              {hoveredClick.element_href && (
+              {hoveredClick.element_info.href && (
                 <div className="col-span-2">
                   <div className="font-medium">Link URL</div>
-                  <div className="truncate">{hoveredClick.element_href}</div>
+                  <div className="truncate">{hoveredClick.element_info.href}</div>
                 </div>
               )}
             </div>
@@ -259,7 +259,7 @@ export const HeatmapViewer: React.FC<HeatmapViewerProps> = ({
             </div>
             <div>
               <div className="text-2xl font-bold text-orange-600">
-                {new Set(clickData.map(c => c.element_tag)).size}
+                {new Set(clickData.map(c => c.element_info.tag)).size}
               </div>
               <div className="text-sm text-gray-600">Element Types</div>
             </div>
