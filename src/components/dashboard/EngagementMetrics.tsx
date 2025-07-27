@@ -78,25 +78,21 @@ export const EngagementMetrics: React.FC<EngagementMetricsProps> = ({
       setLoading(true);
       setError(null);
 
+      // Import the API client
+      const { apiClient } = await import('@/lib/api');
+
       const params = {
         article_id: articleId,
         start_date: dateRange.from.toISOString(),
         end_date: dateRange.to.toISOString(),
       };
 
-      // Direct fetch for debugging
-      const url = `http://localhost:8000/api/v1/analytics/engagement-metrics/?${new URLSearchParams(params)}`;
-      console.log('Fetching URL:', url);
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log('Response:', data);
+      console.log('Fetching engagement metrics with params:', params);
+      const response = await apiClient.get('/analytics/engagement-metrics/', { params });
+      console.log('Response:', response.data);
       
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      if (data && data.success) {
-        setData(data.data);
+      if (response.data && response.data.success) {
+        setData(response.data.data);
       } else {
         throw new Error('Invalid response format');
       }

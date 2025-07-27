@@ -38,17 +38,19 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({
       if (!selectedArticleId) return;
       
       try {
-        const params = new URLSearchParams({
+        // Import the API client
+        const { apiClient } = await import('@/lib/api');
+        
+        const params = {
           article_id: selectedArticleId,
           start_date: dateRange.from.toISOString(),
           end_date: dateRange.to.toISOString(),
-        });
+        };
         
-        const response = await fetch(`http://localhost:8000/api/v1/analytics/scroll-depth/?${params}`);
-        const data = await response.json();
+        const response = await apiClient.get('/analytics/scroll-depth/', { params });
         
-        if (data.success) {
-          setScrollData(data.data.session_depths || []);
+        if (response.data && response.data.success) {
+          setScrollData(response.data.data.session_depths || []);
         }
       } catch (error) {
         console.error('Failed to fetch scroll data:', error);
